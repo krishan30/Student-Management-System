@@ -1,0 +1,96 @@
+CREATE TABLE usertype(
+    usertypeid INTEGER primary key AUTO_INCREMENT,
+    usertypename varchar(40)
+);
+CREATE TABLE user(
+    userid varchar(16) primary key ,
+    usertypeid INTEGER not null ,
+    firstname varchar(60),
+    lastname varchar(60),
+    contactnumber  char(10),
+    address varchar(256),
+    nic varchar(16),
+    registrationdate DATETIME,
+    leavedate DATETIME,
+    email varchar(64),
+    password varchar(512),
+
+    foreign key (usertypeid) references usertype(usertypeid)
+);
+
+CREATE TABLE level(
+    levelid INTEGER primary key AUTO_INCREMENT,
+    duration DATETIME,
+    levelname varchar(64)
+);
+CREATE TABLE Teacher (
+    teacherid INTEGER PRIMARY KEY AUTO_INCREMENT,
+    userid  VARCHAR(16),
+    FOREIGN KEY (userid) REFERENCES user(userid)
+);
+
+CREATE TABLE course(
+    courseid INTEGER PRIMARY KEY AUTO_INCREMENT,
+    levelid INTEGER NOT NULL ,
+    coursename VARCHAR(64) NOT NULL ,
+    duration DATETIME NOT NULL ,
+    credit INTEGER NOT NULL
+);
+
+CREATE TABLE announcement (
+    announcementid INTEGER PRIMARY KEY AUTO_INCREMENT,
+    title varchar(100) NOT NULL ,
+    body TINYTEXT NOT NULL ,
+    courseid INTEGER NOT NULL ,
+    teacherid INTEGER NOT NULL ,
+    FOREIGN KEY (courseid) REFERENCES course(courseid),
+    FOREIGN KEY (teacherid) REFERENCES teacher(teacherid)
+
+);
+CREATE TABLE teaches (
+    courseid INTEGER NOT NULL,
+    teacherid INTEGER NOT NULL ,
+    availability BOOL DEFAULT TRUE,
+    FOREIGN KEY (courseid) REFERENCES course(courseid),
+    FOREIGN KEY (teacherid) REFERENCES teacher(teacherid)
+);
+
+CREATE TABLE batch (
+    batchid INTEGER PRIMARY KEY AUTO_INCREMENT,
+    year DATE NOT NULL ,
+    levelid INTEGER NOT NULL ,
+    starteddate DATE NOT NULL ,
+    endeddate DATE,
+    FOREIGN KEY (levelid) REFERENCES level(levelid)
+);
+CREATE TABLE student(
+    studentid INTEGER PRIMARY KEY AUTO_INCREMENT,
+    batchid INTEGER NOT NULL ,
+    userid VARCHAR(16) NOT NULL ,
+    FOREIGN KEY (userid) REFERENCES user(userid)
+);
+CREATE TABLE courseEnrollment(
+    studentid INTEGER NOT NULL ,
+    courseid INTEGER NOT NULL ,
+    enrolleddate DATETIME NOT NULL ,
+    finisheddate DATETIME,
+    FOREIGN KEY (studentid) REFERENCES student(studentid)
+);
+CREATE TABLE result (
+    resultid INTEGER PRIMARY KEY AUTO_INCREMENT,
+    courseid INTEGER NOT NULL ,
+    teacherid INTEGER NOT NULL ,
+    releasedate DATETIME NOT NULL ,
+    resultsheet BLOB NOT NULL ,
+    batchid INTEGER NOT NULL ,
+    FOREIGN KEY (courseid) REFERENCES course(courseid),
+    FOREIGN KEY (teacherid) REFERENCES teacher(teacherid),
+    FOREIGN KEY (batchid) REFERENCES batch(batchid)
+);
+CREATE TABLE  timetable(
+    timetableid INTEGER PRIMARY KEY AUTO_INCREMENT,
+    releasedate DATETIME NOT NULL ,
+    timetable BLOB NOT NULL ,
+    batchid INTEGER NOT NULL ,
+    FOREIGN KEY (batchid) REFERENCES batch(batchid)
+);
