@@ -11,7 +11,7 @@ export default function App() {
   return (
     <div className="App">
       <AddAnnouncement></AddAnnouncement>
-      <ViewStudentDetail></ViewStudentDetail>
+      <ViewStudentDetail> </ViewStudentDetail>
     </div>
   );
 }

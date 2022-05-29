@@ -114,7 +114,7 @@ const StudentDetail = () => {
 
       <h1>STUDENT DETAIL</h1>
 
-      <table>
+      <table className="table p-3 m-3">
         <thead>
           <th>Student ID</th>
           <th>{stuId} </th>
