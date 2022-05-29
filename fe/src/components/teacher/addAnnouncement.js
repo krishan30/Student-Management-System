@@ -33,6 +33,7 @@ export default function Form() {
 
   return (
     <React.Fragment>
+      <h1>ADD ANNOUNCEMENT</h1>
       <form>
         <div className="row m-3 align-items-center">
           <div className="col-5">
