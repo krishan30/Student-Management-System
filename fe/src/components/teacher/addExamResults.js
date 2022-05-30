@@ -67,7 +67,8 @@ const ExamResult = () => {
   const [courses, setcourses] = useState([]);
   const [name, setName] = useState("");
   const [marks, setMarks] = useState("");
-
+  const [selectedCourse, setSelectedCourse] = useState("");
+  
   const [existMarks, setExistMarks] = useState("");
   const [isExist, setIsExist] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -77,7 +78,7 @@ const ExamResult = () => {
     let payload = {
       studentid,
       name,
-      module,
+      selectedCourse,
       marks,
     };
 
@@ -87,6 +88,7 @@ const ExamResult = () => {
   const handlecourseselect = (e) => {
     console.log(e.target.value);
     // setModule(e.target.value);
+    setSelectedCourse(e.target.value);
     let module = e.target.value;
     let res = data.filter((res) => res.studentid == studentid)[0].result;
     res = res.filter((result) => result.module == module)[0];
