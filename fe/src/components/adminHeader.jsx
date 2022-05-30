@@ -3,7 +3,7 @@ import React from "react";
 const AdminHeader = () => {
   return (
     <nav className="navbar navbar-expand-lg  bg-dark">
-      <a className="navbar-brand h1 mx-4 text-white" href="#">
+      <a className="navbar-brand h1 mx-4 text-white" href="/Admin">
         Learn
       </a>
       <button
