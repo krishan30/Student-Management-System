@@ -1,4 +1,14 @@
 import React from "react";
+<<<<<<< HEAD
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.css";
+import AddAnnouncement from './components/teacher/addAnnouncement';
+import ViewStudentDetail from './components/teacher/viewStudentDetail';
+import AddExamResult from './components/teacher/addExamResults';
+
+export default function App() {
+  
+=======
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Teacher from "./pages/admin/adminTeacher";
 import AdminCourse from "./pages/admin/adminCourse";
@@ -9,9 +19,16 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import AdminTeacher from "./pages/admin/adminTeacher";
 
+>>>>>>> test
 
-function App() {
   return (
+<<<<<<< HEAD
+    <div className="App">
+      <AddAnnouncement></AddAnnouncement>
+      <ViewStudentDetail> </ViewStudentDetail>
+      <AddExamResult></AddExamResult>
+    </div>
+=======
     <Router>
         <AdminHeader />
       <div className="row m-0">
@@ -29,7 +46,6 @@ function App() {
         </div>
       </div>
     </Router>
+>>>>>>> test
   );
 }
-
-export default App;
