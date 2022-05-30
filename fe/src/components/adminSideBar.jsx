@@ -17,7 +17,7 @@ const Sidebar = () => {
         <NavLink className="nav-item nav-link text-white" to="/Admin/course">
           Courses
         </NavLink>
-        <NavLink className="nav-item nav-link text-white" to="/timetable">
+        <NavLink className="nav-item nav-link text-white" to="/Admin/timetable">
           TimeTable
         </NavLink>
       </ul>
