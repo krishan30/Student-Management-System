@@ -31,11 +31,11 @@ const AddTimeTable = () => {
         />
       </div>
 
-      <div class="col-md-6">
-        <label for="formFile" class="form-label">
+      <div className="col-md-6">
+        <label htmlFor="formFile" className="form-label">
           Input Timetable file
         </label>
-        <input class="form-control" type="file" id="formFile" />
+        <input className="form-control" type="file" id="formFile" />
       </div>
 
       <div className="col-12 text-center">

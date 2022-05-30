@@ -2,12 +2,12 @@ import React from "react";
 
 const AdminHeader = () => {
   return (
-    <nav class="navbar navbar-expand-lg  bg-dark">
-      <a class="navbar-brand h1 mx-4 text-white" href="#">
+    <nav className="navbar navbar-expand-lg  bg-dark">
+      <a className="navbar-brand h1 mx-4 text-white" href="#">
         Learn
       </a>
       <button
-        class="navbar-toggler"
+        className="navbar-toggler"
         type="button"
         data-toggle="collapse"
         data-target="#navbarText"
@@ -15,11 +15,11 @@ const AdminHeader = () => {
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-icon"></span>
+        <span className="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto"></ul>
-        <span class="navbar-text text-white me-3">
+      <div className="collapse navbar-collapse" id="navbarText">
+        <ul className="navbar-nav me-auto"></ul>
+        <span className="navbar-text text-white me-3">
           Admin
         </span>
       </div>
