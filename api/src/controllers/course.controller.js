@@ -17,6 +17,7 @@ exports.createCourse = (req, res) => {
         CourseId: req.body.courseId,
         LevelId: req.body.levelId,
         CourseName: req.body.courseName,
+        Description: req.body.description,
         Duration: req.body.duration,
         Credit: req.body.credit,
     });
