@@ -7,6 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import AdminLanding from "./pages/admin/adminLanding";
+import NavBarTeacher from './components/teacher/navbar';
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,6 +27,8 @@ export default function App() {
             path="/Admin"
             element={<Navigate to="/Admin/dashboard" replace />}
           />
+
+          <Route path="/" element={<NavBarTeacher/>}></Route>
         </Routes>
       </Router>
       <ToastContainer
@@ -38,11 +41,6 @@ export default function App() {
         rtl={false}
         draggable
       />
-
-      {/* <div className="App">
-      <AddAnnouncement></AddAnnouncement>
-      <ViewStudentDetail> </ViewStudentDetail>
-      <AddExamResult></AddExamResult> */}
     </div>
   );
 }
