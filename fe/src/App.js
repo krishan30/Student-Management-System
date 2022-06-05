@@ -12,6 +12,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Login from "./pages/login";
 
 // import AddAnnouncement from "./components/teacher/addAnnouncement";
 // import ViewStudentDetail from "./components/teacher/viewStudentDetail";
@@ -22,6 +23,7 @@ export default function App() {
     <div>
       <Router>
         <Routes>
+        <Route path="/login" element={<Login />} />
           <Route path="/Admin/*" element={<AdminLanding />} />
           <Route
             path="/Admin"
