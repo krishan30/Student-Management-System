@@ -1,5 +1,5 @@
 import React from "react";
-import { ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,9 +9,14 @@ import {
 import AdminLanding from "./pages/admin/adminLanding";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-function App() {
+// import AddAnnouncement from "./components/teacher/addAnnouncement";
+// import ViewStudentDetail from "./components/teacher/viewStudentDetail";
+// import AddExamResult from "./components/teacher/addExamResults";
+
+export default function App() {
   return (
     <div>
       <Router>
@@ -33,8 +38,11 @@ function App() {
         rtl={false}
         draggable
       />
+
+      {/* <div className="App">
+      <AddAnnouncement></AddAnnouncement>
+      <ViewStudentDetail> </ViewStudentDetail>
+      <AddExamResult></AddExamResult> */}
     </div>
   );
 }
-
-export default App;
