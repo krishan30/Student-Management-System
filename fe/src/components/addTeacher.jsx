@@ -1,6 +1,74 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useGetNextUserId from "../hooks/useGetNextUserId";
+import axios from "axios";
+import { toast } from "react-toastify";
+import config from "../config/config.json";
 
-const AddTeacher = () => {
+const AddTeacher = ({getTeachers}) => {
+  const userId = useGetNextUserId();
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [contactnum, setContactNum] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [nic, setNIC] = useState("");
+  const registrationDate = new Date().toISOString().substring(0, 10);
+
+
+  const handleFirstName = (e) => {
+    setFirstName(e.target.value);
+  };
+  const handleLastName = (e) => {
+    setLastName(e.target.value);
+  };
+  const handleContactNum = (e) => {
+    setContactNum(e.target.value);
+  };
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
+  const handleAddress = (e) => {
+    setAddress(e.target.value);
+  };
+  const handleNIC = (e) => {
+    setNIC(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let payload = {
+      userId: userId,
+      userTypeId: 1,
+      firstName: firstname,
+      lastName: lastname,
+      contactNumber: contactnum,
+      address: address,
+      NIC: nic,
+      registrationDate: registrationDate,
+      email: email
+    };
+
+    axios
+      .post(`${config.REACT_APP_API}/api/teacher/tc`, payload, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((res) => {
+        getTeachers();
+        toast.success("Teacher Added", {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: 0,
+        });
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <form className="row g-3">
       <div className="col-md-4">
@@ -12,8 +80,8 @@ const AddTeacher = () => {
           className="form-control"
           id="firstName"
           placeholder="First Name"
-          //   value={date}
-          //   onChange={handleDateChange}
+          value={firstname}
+          onChange={handleFirstName}
         />
       </div>
 
@@ -26,24 +94,11 @@ const AddTeacher = () => {
           className="form-control"
           id="lastName"
           placeholder="Last Name"
-          //   value={date}
-          //   onChange={handleDateChange}
+          value={lastname}
+          onChange={handleLastName}
         />
       </div>
 
-      <div className="col-md-4">
-        <label htmlFor="batch" className="form-label">
-          Batch ID
-        </label>
-        <input
-          type="number"
-          className="form-control"
-          id="batch"
-          placeholder="Batch ID"
-          //   value={product}
-          //   onChange={handleProductChange}
-        />
-      </div>
 
       <div className="col-md-4">
         <label htmlFor="contactNum" className="form-label">
@@ -54,10 +109,11 @@ const AddTeacher = () => {
           className="form-control"
           id="contactNum"
           placeholder="07xxxxxxxx"
-          //   value={product}
-          //   onChange={handleProductChange}
+          value={contactnum}
+          onChange={handleContactNum}
         />
       </div>
+
       <div className="col-md-4">
         <label htmlFor="email" className="form-label">
           Email
@@ -67,10 +123,11 @@ const AddTeacher = () => {
           className="form-control"
           id="email"
           placeholder="example@example.com"
-          //   value={product}
-          //   onChange={handleProductChange}
+          value={email}
+          onChange={handleEmail}
         />
       </div>
+
       <div className="col-md-4">
         <label htmlFor="address" className="form-label">
           Address
@@ -80,10 +137,11 @@ const AddTeacher = () => {
           className="form-control"
           id="address"
           placeholder="Address"
-          //   value={product}
-          //   onChange={handleProductChange}
+          value={address}
+          onChange={handleAddress}
         />
       </div>
+
       <div className="col-md-4">
         <label htmlFor="nic" className="form-label">
           NIC
@@ -93,10 +151,11 @@ const AddTeacher = () => {
           className="form-control"
           id="nic"
           placeholder="nic"
-          //   value={unitPrice}
-          //   onChange={handleUnitPriceChange}
+          value={nic}
+          onChange={handleNIC}
         />
       </div>
+
       <div className="col-md-4">
         <label htmlFor="registrationDate" className="form-label">
           Registration Date
@@ -106,30 +165,16 @@ const AddTeacher = () => {
           className="form-control"
           id="registrationDate"
           placeholder="Registration Date"
-          //   value={unitPrice}
-          //   onChange={handleUnitPriceChange}
-        />
-      </div>
-      <div className="col-md-4">
-        <label htmlFor="leaveDate" className="form-label">
-          Leave Date
-        </label>
-        <input
-          type="Date"
-          className="form-control"
-          id="leaveDate"
-          placeholder="leave Date"
-          //   value={unitPrice}
-          //   onChange={handleUnitPriceChange}
+          value={registrationDate}
+          disabled
         />
       </div>
 
-
-      <div className="col-12 text-center">
+      <div className="col-8 pt-4 text-center">
         <button
           type="submit"
           className="btn btn-outline-dark"
-          //   onClick={handleSubmit}
+          onClick={handleSubmit}
         >
           Add Teacher
         </button>

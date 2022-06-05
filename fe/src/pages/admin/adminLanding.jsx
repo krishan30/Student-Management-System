@@ -16,7 +16,7 @@ const AdminLanding = () => {
         <div className="col-2 p-0">
           <Sidebar />
         </div>
-        <div className="col-9">
+        <div className="col-10">
           <Routes>
             <Route path="/dashboard" element={<AdminDashboard />} />
             <Route path="/teacher" element={<AdminTeacher />} />
