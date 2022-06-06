@@ -1,38 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 const StudentDetail = () => {
-  const data = [
-    {
-      studentid: 1,
-      batchid: 2,
-      firstname: "kesavi",
-      lastname: "aravinthan",
-      contactnumber: "0778899654",
-      address: "No 23, Second street,Jaffna",
-      nic: "997121789V",
-      email: "kesavi@gmail.com",
-    },
-    {
-      studentid: 2,
-      batchid: 2,
-      firstname: "abinesh",
-      lastname: "thaventhirarajah",
-      contactnumber: "0778229654",
-      address: "No 23, Third street,Alvaai",
-      nic: "997121789V",
-      email: "abinesh@gmail.com",
-    },
-    {
-      studentid: 3,
-      batchid: 2,
-      firstname: "laksi",
-      lastname: "tharmalingam",
-      contactnumber: "0771144569",
-      address: "No 23, Fourth street,Kilinochi",
-      nic: "997121789V",
-      email: "laksi@gmail.com",
-    },
-  ];
+  // const data = [
+  //   {
+  //     studentid: 1,
+  //     batchid: 2,
+  //     firstname: "kesavi",
+  //     lastname: "aravinthan",
+  //     contactnumber: "0778899654",
+  //     address: "No 23, Second street,Jaffna",
+  //     nic: "997121789V",
+  //     email: "kesavi@gmail.com",
+  //   },
+  //   {
+  //     studentid: 2,
+  //     batchid: 2,
+  //     firstname: "abinesh",
+  //     lastname: "thaventhirarajah",
+  //     contactnumber: "0778229654",
+  //     address: "No 23, Third street,Alvaai",
+  //     nic: "997121789V",
+  //     email: "abinesh@gmail.com",
+  //   },
+  //   {
+  //     studentid: 3,
+  //     batchid: 2,
+  //     firstname: "laksi",
+  //     lastname: "tharmalingam",
+  //     contactnumber: "0771144569",
+  //     address: "No 23, Fourth street,Kilinochi",
+  //     nic: "997121789V",
+  //     email: "laksi@gmail.com",
+  //   },
+  // ];
 
+  const [data, setData] = useState([]);
   const [stuId, setStuId] = useState("");
   const [batchid, setBatchId] = useState("");
   const [firstname, setFirstName] = useState("");
@@ -42,6 +44,17 @@ const StudentDetail = () => {
   const [nic, setNic] = useState("");
   const [email, setEmail] = useState("");
   const [isExist, setIsExist] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/student/sall")
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const handleStuId = (e) => {
     setStuId(e.target.value);
@@ -84,11 +97,11 @@ const StudentDetail = () => {
   return (
     <>
       <form>
-        <h1>ENTER STUDENT ID HERE</h1>
-        <div className="row m-0 my-3">
-          <div className="col-4">
-            <label htmlFor="stuId">Student ID</label>
-            <input
+        <h4 className="text-center">ENTER STUDENT ID HERE</h4>
+        <div className="row m-0 my-3 text-end">
+          {/* <div className="col-4">  */}
+          <div className="col-4"> <label htmlFor="stuId">Student ID</label></div> 
+          <div className="col-4"> <input
               type="text"
               className="form-control"
               placeholder="Student ID"
@@ -96,14 +109,20 @@ const StudentDetail = () => {
               id="stuId"
               value={stuId}
               onChange={handleStuId}
-            />
-          </div>
+            /></div> 
+          {/* </div> */}
 
-          <div
+
+         
+        </div>
+
+        <div className="row">
+          <div className="col-3"></div>
+        <div
             className={
               isExist === false
-                ? " alert alert-danger col-5 my-3 text-center"
-                : " alert alert-danger d-none col-3 my-3"
+                ? " alert alert-danger col-5 my-3 text-center "
+                : " alert alert-success d-none col-3 my-3"
             }
             role="alert"
           >
@@ -112,42 +131,121 @@ const StudentDetail = () => {
         </div>
       </form>
 
-      <h1>STUDENT DETAIL</h1>
+      <h4 className="text-center">STUDENT DETAIL</h4>
 
-      <table className="table p-3 m-3">
-        <thead>
-          <th>Student ID</th>
-          <th>{stuId} </th>
-        </thead>
-        <thead>
-          <th>Batch ID</th>
-          <th>{batchid} </th>
-        </thead>
-        <thead>
-          <th>First Name </th>
-          <th>{firstname}</th>
-        </thead>
-        <thead>
-          <th>Last Name </th>
-          <th>{lastname}</th>
-        </thead>
-        <thead>
-          <th>Contact Number </th>
-          <th>{contactNumber}</th>
-        </thead>
-        <thead>
-          <th>Address</th>
-          <th>{address}</th>
-        </thead>
-        <thead>
-          <th>NIC</th>
-          <th>{nic}</th>
-        </thead>
-        <thead>
-          <th>Email</th>
-          <th>{email}</th>
-        </thead>
-      </table>
+      <div className="p-1">
+        <div className="row g-3 align-items-center text-end my-2">
+          <div className="col-4">
+            <label className="col-form-label">Student ID</label>
+          </div>
+          <div className="col-4">
+            <input
+              placeholder={stuId}
+              type="text"
+              className="form-control"
+              disabled
+            />
+          </div>
+        </div>
+
+        <div className="row g-3 align-items-center text-end my-2">
+          <div className="col-4">
+            <label className="col-form-label">Batch ID</label>
+          </div>
+          <div className="col-4">
+            <input
+              placeholder={batchid}
+              type="text"
+              className="form-control"
+              disabled
+            />
+          </div>
+        </div>
+
+        <div className="row g-3 align-items-center text-end my-2">
+          <div className="col-4">
+            <label className="col-form-label">First Name</label>
+          </div>
+          <div className="col-4">
+            <input
+              placeholder={firstname}
+              type="text"
+              className="form-control"
+              disabled
+            />
+          </div>
+        </div>
+
+        <div className="row g-3 align-items-center text-end my-2">
+          <div className="col-4">
+            <label className="col-form-label">Last Name</label>
+          </div>
+          <div className="col-4">
+            <input
+              placeholder={lastname}
+              type="text"
+              className="form-control"
+              disabled
+            />
+          </div>
+        </div>
+
+        <div className="row g-3 align-items-center text-end my-2">
+          <div className="col-4">
+            <label className="col-form-label">Contact Number</label>
+          </div>
+          <div className="col-4">
+            <input
+              placeholder={contactNumber}
+              type="text"
+              className="form-control"
+              disabled
+            />
+          </div>
+        </div>
+
+        <div className="row g-3 align-items-center text-end my-2">
+          <div className="col-4">
+            <label className="col-form-label">Address</label>
+          </div>
+          <div className="col-4">
+            <input
+              placeholder={address}
+              type="text"
+              className="form-control"
+              disabled
+            />
+          </div>
+        </div>
+
+        <div className="row g-3 align-items-center text-end my-2">
+          <div className="col-4">
+            <label className="col-form-label">NIC</label>
+          </div>
+          <div className="col-4">
+            <input
+              placeholder={nic}
+              type="text"
+              className="form-control"
+              disabled
+            />
+          </div>
+        </div>
+
+        <div className="row g-3 align-items-center text-end my-2">
+          <div className="col-4">
+            <label className="col-form-label">Email</label>
+          </div>
+          <div className="col-4">
+            <input
+              placeholder={email}
+              type="text"
+              className="form-control"
+              disabled
+            />
+          </div>
+        </div>
+      </div>
     </>
   );
 };

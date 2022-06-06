@@ -4,7 +4,6 @@ const Course = function (course) {
     this.CourseId = course.CourseId;
     this.LevelId = course.LevelId;
     this.CourseName = course.CourseName;
-    this.Description = course.Description;
     this.Duration = course.Duration;
     this.Credit = course.Credit;
 };

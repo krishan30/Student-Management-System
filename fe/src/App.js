@@ -7,7 +7,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import AdminLanding from "./pages/admin/adminLanding";
-import NavBarTeacher from "./components/teacher/navbar";
 import Login from "./pages/login";
 import PrivateRoutes from "./routes/PrivateRoute";
 import PublicRoutes from "./routes/PublicRoute";
@@ -17,26 +16,24 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-// import AddAnnouncement from "./components/teacher/addAnnouncement";
-// import ViewStudentDetail from "./components/teacher/viewStudentDetail";
-// import AddExamResult from "./components/teacher/addExamResults";
+import "bootstrap/dist/css/bootstrap.css";
+import TeacherLanding from "./components/teacher/teacherLanding";
 
 export default function App() {
   const [userTypeId, setUserType] = useState();
 
   useEffect(() => {
     try {
-      if (localStorage.getItem("token")) {
-        const user = jwtDecode(localStorage.getItem("token"));
-        console.log(user.usertype);
-        setUserType(user.usertype);
+      if (localStorage.getItem("typeId")) {
+        const usertype = localStorage.getItem("typeId");
+        setUserType(usertype);
       }
     } catch (error) {}
   }, []);
 
+  
   return (
-    <div>
+    <div className="App">
       <Router>
         <Routes>
           <Route path="/" element={<PublicRoutes />}>
@@ -44,7 +41,7 @@ export default function App() {
             <Route path="/logout" element={<Logout />} />
           </Route>
           <Route path="/" element={<PrivateRoutes />}>
-            {userTypeId === 3 && (
+            {userTypeId === '3' && (
               <React.Fragment>
                 <Route path="/Admin/*" element={<AdminLanding />} />
                 <Route
@@ -54,13 +51,22 @@ export default function App() {
               </React.Fragment>
             )}
 
-            {userTypeId !== 3 && (
+            {userTypeId !== '3' && (
               <React.Fragment>
                 <Route path="/Admin/*" element={<Navigate to="/" replace />} />
               </React.Fragment>
             )}
 
-            <Route path="/*" element={<NavBarTeacher />}></Route>
+            {userTypeId === '1' && (
+              <React.Fragment>
+                <Route path="/Admin/*" element={<TeacherLanding />} />
+                <Route path="/teacher/*" element={<TeacherLanding />}></Route>
+                <Route
+                  path="/teacher"
+                  element={<Navigate to="/teacher/announcement" replace />}
+                />
+              </React.Fragment>
+            )}
           </Route>
         </Routes>
       </Router>

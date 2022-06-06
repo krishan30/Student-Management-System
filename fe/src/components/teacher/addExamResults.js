@@ -1,248 +1,134 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 // import { Container, Row, Col, Button } from "react-bootstrap";
 
 const ExamResult = () => {
-  const data = [
-    {
-      studentid: 1,
-      batchid: 2,
-      firstname: "kesavi",
-      lastname: "aravinthan",
-      contactnumber: "0778899654",
-      address: "No 23, Second street,Jaffna",
-      nic: "997121789V",
-      email: "kesavi@gmail.com",
-      result: [{ module: "module1", marks: 75 }],
-      courseid: ["module1"],
-    },
-    {
-      studentid: 2,
-      batchid: 2,
-      firstname: "abinesh",
-      lastname: "thaventhirarajah",
-      contactnumber: "0778229654",
-      address: "No 23, Third street,Alvaai",
-      nic: "997121789V",
-      email: "abinesh@gmail.com",
-      result: [{ module: "module1", marks: 75 }],
-      courseid: ["module1", "module2"],
-    },
-    {
-      studentid: 3,
-      batchid: 2,
-      firstname: "abinesh",
-      lastname: "thaventhirarajah",
-      contactnumber: "0778229654",
-      address: "No 23, Third street,Alvaai",
-      nic: "997121789V",
-      email: "abinesh@gmail.com",
-      result: [
-        { module: "module1", marks: 75 },
-        { module: "module2", marks: 85 },
-        { module: "module3", marks: 100 },
-      ],
-      courseid: ["module1", "module2", "module3"],
-    },
-    {
-      studentid: 2,
-      batchid: 2,
-      firstname: "laksi",
-      lastname: "tharmalingam",
-      contactnumber: "0771144569",
-      address: "No 23, Fourth street,Kilinochi",
-      nic: "997121789V",
-      email: "laksi@gmail.com",
-      result: [
-        { module: "module1", marks: 75 },
-        { module: "module2", marks: 85 },
-        { module: "module3", marks: 100 },
-        { module: "module4", marks: 100 },
-      ],
-      courseid: ["module1", "module2", "module3", "module4"],
-    },
-  ];
-
- 
+  const [teacherId, useTeacherId] = useState(1); // teacher id : from session set this.......................
   const [studentid, setstudentid] = useState();
+  const [batchid, setBatchId] = useState();
   const [courses, setcourses] = useState([]);
-  const [name, setName] = useState("");
-  const [marks, setMarks] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
-  
-  const [existMarks, setExistMarks] = useState("");
-  const [isExist, setIsExist] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [grade, setGrade] = useState();
+  const [allGrades, setAllGrades] = useState([]);
+  const [date, setDate] = useState();
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/grade/GradeDetails`)
+      .then((res) => {
+        setAllGrades(res.data);
+        console.log("all grades= ", res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const handleSubmit = (e) => {
+    
+    const now = new Date();
+    const date1 =
+      now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
+    const time =
+      now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+    const currrentDateTime = date1 + " " + time;
+    setDate(currrentDateTime);
+    console.log(currrentDateTime);
+
     e.preventDefault();
-    let payload = {
-      studentid,
-      name,
-      selectedCourse,
-      marks,
+   
+    const payload = {
+      courseId: selectedCourse,
+      teacherId: teacherId,
+      releaseDate: currrentDateTime,
+      batchId: batchid,
+      grade: grade,
+      studentId: studentid,
     };
 
     console.log("payload", payload);
+    axios.post(`http://localhost:5000/api/result/ResultDetails`, payload).then(
+      (response) => {
+        console.log(response);
+        setstudentid("");
+        setBatchId("");
+        setcourses([]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    
   };
 
   const handlecourseselect = (e) => {
-    console.log(e.target.value);
-    // setModule(e.target.value);
+    console.log("selectde course = ", e.target.value);
     setSelectedCourse(e.target.value);
-    let module = e.target.value;
-    let res = data.filter((res) => res.studentid == studentid)[0].result;
-    res = res.filter((result) => result.module == module)[0];
-
-    console.table("Res", res);
-    if (res) {
-      setIsDisabled(true);
-      setIsExist(true);
-      setMarks(res.marks);
-      setExistMarks(res.marks);
-    } else {
-      setIsExist(false);
-      setIsDisabled(false);
-      setMarks("");
-    }
+    axios
+      .get(
+        `http://localhost:5000/api/result/FindResult/${e.target.value}/${studentid}`
+      )
+      .then((res) => {
+        // setAllGrades(res.data);
+        console.log(" result already exist= ", res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
-  const handleMarks = (e) => {
-    setMarks(e.target.value);
+  const handleGradeSelect = (e) => {
+    console.log("selected grade", e.target.value);
+    setGrade(e.target.value);
   };
 
   const handlestudentid = (e) => {
     setstudentid(e.target.value);
-    setIsExist(false);
+    console.log("student id = ", e.target.value);
 
-    let courses = data.filter((d) => d.studentid == e.target.value);
-    if (courses.length > 0) {
-      setcourses(courses[0]?.courseid);
-      setName(courses[0]?.firstname);
-    } else {
-      setcourses([]);
-      setName("");
-      setMarks("");
-    }
+    axios
+      .get(`http://localhost:5000/api/student/sc/${e.target.value}`)
+      .then((res) => {
+        console.log(res);
+        console.log("student data= ", res.data);
+        setBatchId(res.data.batchid);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get(`http://localhost:5000/api/course/${e.target.value}`)
+      .then((response) => {
+        setcourses(response.data);
+        console.log("student courses= ", response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
     <>
-    <h1>ADD RESULTS</h1>
-      <form>
-        <div className="row m-0 my-3">
-          <div className="col-3">
-            <label htmlFor="studentid">Student ID</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Student ID"
-              aria-label="Student ID"
-              id="studentid"
-              value={studentid}
-              onChange={handlestudentid}
-            />
-          </div>
-
-          <div className="col-3">
-            <label htmlFor="courses">Module</label>
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              id="courses"
-              onChange={handlecourseselect}
-            >
-              <option value={"0"}>Choose module</option>
-              {courses.length > 0 &&
-                courses?.map((module) => (
-                  <option key={module} value={module}>
-                    {module}
-                  </option>
-                ))}
-            </select>
-          </div>
+      <h3 className="text-center">ADD RESULTS</h3>
+      <form className="text-end ">
+        <div className="row p-3">
+          <div className="col-4 my-2"><label htmlFor="studentid">Student ID</label></div>
+          <div className="col-4"> <input type="text" className="form-control" placeholder="Student ID" id="studentid"  value={studentid} onChange={handlestudentid} /></div>
         </div>
-
-        <div className="row m-0 my-3">
-          <div className="col-3">
-            <label htmlFor="name">Student Name</label>
-            <input
-              type="text"
-              className="form-control"
-              value={name}
-              aria-label="First name"
-              id="name"
-              disabled
-            />
-          </div>
-          {isExist ? (
-            <div className="col-4">
-              <label htmlFor="marks" className="text-danger">
-              </label>
-
-              <div class="input-group">
-                <input
-                  type="number"
-                  className="form-control"
-                  max={100}
-                  min={0}
-                  value={marks}
-                  onChange={handleMarks}
-                  disabled={isDisabled}
-                  placeholder="Marks"
-                  aria-label="Marks"
-                  id="marks"
-                />
-                <button
-                  class="btn btn-outline-secondary shadow-none"
-                  type="button"
-                  id="button-addon2"
-                  onClick={(e) => {
-                    if (isDisabled) {
-                      setIsDisabled(false);
-                    } else {
-                      setIsDisabled(true);
-                      setMarks(existMarks);
-                    }
-                    console.log("e", e.target.value);
-                  }}
-                >
-                  {isDisabled ? "Edit" : "Cancel"}
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="col-3">
-              <label htmlFor="marks">Marks</label>
-              <input
-                type="number"
-                max={100}
-                min={0}
-                value={marks}
-                onChange={handleMarks}
-                className="form-control"
-                placeholder="Marks"
-                aria-label="Marks"
-                id="marks"
-              />
-            </div>
-          )}
+        <div className="row p-3">
+          <div className="col-4 my-2"><label htmlFor="courses">Module</label></div>
+          <div className="col-4"> <select className="form-select" id="courses" onChange={handlecourseselect}> <option value={"0"}>Choose module</option> {courses.length > 0 && courses?.map((c) => ( <option key={c.courseid} value={c.courseid}> {c.coursename} </option> ))} </select></div>
         </div>
-
-        <div className="d-flex justify-content-end m-2">
-          <button
-            className="btn btn-primary"
-            onClick={handleSubmit}
-            disabled={isDisabled}
-          >
-            Save
+        <div className="row p-3">
+          <div className="col-4 my-2"> <label htmlFor="courses">Grade</label></div>
+          <div className="col-4"> <select className="form-select" id="courses" onChange={handleGradeSelect}> <option value={"0"}>Choose grade</option> {allGrades.length > 0 && allGrades?.map((g) => ( <option key={g.gradeid} value={g.gradeid}> {g.gradename} </option> ))} </select></div>
+        </div>
+        <div className="row p-3">
+          <div className="col-4 my-2"> <label htmlFor="studentid">Batch Id</label></div>
+          <div className="col-4"><input type="text" className="form-control" placeholder="Batch ID" id="batchid" value={batchid}/></div>
+        </div>
+        <div className="d-flex justify-content-center m-2">
+          <button className="btn btn-primary" onClick={handleSubmit}>
+          ADD RESULT
           </button>
         </div>
       </form>
 
       <hr />
-      <p>Student Id : {studentid}</p>
-      <p>First Name : {name}</p>
-      <p>Marks : {marks}</p>
     </>
   );
 };
