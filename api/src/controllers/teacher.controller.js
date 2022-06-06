@@ -1,6 +1,7 @@
 const teacherModel = require("../models/teacher.model");
 const userModel = require("../models/user.model");
-const CryptoJS = require("crypto-js");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 
 // Create and Save a new teacher account
@@ -11,6 +12,7 @@ exports.create = (req, res) => {
             message: "Content can not be empty!",
         });
     }
+    const salt = bcrypt.genSaltSync(saltRounds);
     // Create a new User Account
     const newUser = new userModel({
         userId:req.body.userId,
@@ -23,10 +25,7 @@ exports.create = (req, res) => {
         registrationDate:req.body.registrationDate,
         leaveDate:req.body.leaveDate,
         email:req.body.email,
-        password:CryptoJS.AES.encrypt(
-            req.body.Password,
-            process.env.PASS_SEC
-        ).toString()
+        password:bcrypt.hashSync(req.body.password, salt)
     });
 
     // Create a new teacher Account

@@ -93,8 +93,10 @@ const AdminDashboard = () => {
         </div>
 
         <div className="row m-4">
-          <div className="col-4  shadow p-4">
-            <div className="h4 shadow p-2 text-center my-4">Recent Teachers</div>
+          <div className="col-md-4  shadow p-4">
+            <div className="h4 shadow p-2 text-center my-4">
+              Recent Teachers
+            </div>
             <div className="row ">
               <table className="table table-sm">
                 <thead>
@@ -105,22 +107,27 @@ const AdminDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {teachers.reverse().slice(0, 5).map((teacher) => {
-                    return (
-                      <tr>
-                        <td>{teacher.teacherid}</td>
-                        <td>{teacher.firstname}</td>
-                        <td>{teacher.contactnumber}</td>
-                      </tr>
-                    );
-                  })}
+                  {teachers
+                    .reverse()
+                    .slice(0, 5)
+                    .map((teacher) => {
+                      return (
+                        <tr key={teacher.teacherid}>
+                          <td>{teacher.teacherid}</td>
+                          <td>{teacher.firstname}</td>
+                          <td>{teacher.contactnumber}</td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
           </div>
 
-          <div className="col-4  shadow p-4">
-            <div className="h4 shadow p-2 text-center my-4">Recent Students</div>
+          <div className="col-md-4  shadow p-4">
+            <div className="h4 shadow p-2 text-center my-4">
+              Recent Students
+            </div>
             <div className="row ">
               <table className="table table-sm">
                 <thead>
@@ -131,21 +138,24 @@ const AdminDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {students.reverse().slice(0, 5).map((student) => {
-                    return (
-                      <tr>
-                        <td>{student.studentid}</td>
-                        <td>{student.firstname}</td>
-                        <td>{student.contactnumber}</td>
-                      </tr>
-                    );
-                  })}
+                  {students
+                    .reverse()
+                    .slice(0, 5)
+                    .map((student) => {
+                      return (
+                        <tr key={student.studentid}>
+                          <td>{student.studentid}</td>
+                          <td>{student.firstname}</td>
+                          <td>{student.contactnumber}</td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
           </div>
 
-          <div className="col-4  shadow p-4">
+          <div className="col-md-4  shadow p-4">
             <div className="h4 shadow p-2 text-center my-4">Recent Courses</div>
             <div className="row ">
               <table className="table table-sm">
@@ -157,22 +167,23 @@ const AdminDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {courses.reverse().slice(0, 5).map((course) => {
-                    return (
-                      <tr>
-                        <td>{course.courseid}</td>
-                        <td>{course.coursename}</td>
-                        <td>{course.credit}</td>
-                      </tr>
-                    );
-                  })}
+                  {courses
+                    .reverse()
+                    .slice(0, 5)
+                    .map((course) => {
+                      return (
+                        <tr key={course.courseid}>
+                          <td>{course.courseid}</td>
+                          <td>{course.coursename}</td>
+                          <td>{course.credit}</td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
-
-        
       </div>
     </div>
   );

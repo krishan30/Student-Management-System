@@ -29,8 +29,8 @@ User.create = (newUser, result) => {
 //Update A User
 User.updateProfile = (user, result) => {
     db.query(
-        "UPDATE user SET  contactnumber= ?, address = ?,email=? WHERE userid = ?",
-        [user.contactNumber,user.address, user.email,user.userId],
+        "UPDATE user SET  contactnumber= ?, address = ?,email=?,password=? WHERE userid = ?",
+        [user.contactNumber,user.address, user.email,user.password,user.userId],
         (err, res) => {
             if (err) {
                 console.log("error: ", err);

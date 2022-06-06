@@ -30,7 +30,7 @@ export default function App() {
             element={<Navigate to="/Admin/dashboard" replace />}
           />
 
-          <Route path="/" element={<NavBarTeacher/>}></Route>
+          <Route path="/*" element={<NavBarTeacher/>}></Route>
         </Routes>
       </Router>
       <ToastContainer

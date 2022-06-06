@@ -5,8 +5,8 @@ const resultController = require("../controllers/result.controller");
 // Create a new result entry
 router.post("/ResultDetails", resultController.create);
 // Find result entry by courseid and studentid
-router.post("/FindResult", resultController.FindGradeByCourseIdAndStudentID);
+router.get("/FindResult/:courseId/:studentId", resultController.FindGradeByCourseIdAndStudentID);
 //Find results of courses by studentid
-router.post("/AllResult",resultController.FindGradesOfCoursesByStudentId)
+router.get("/AllResult/:studentId",resultController.FindGradesOfCoursesByStudentId);
 
 module.exports = router;

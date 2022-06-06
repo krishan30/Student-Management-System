@@ -9,5 +9,5 @@ router.put("/change/:cid/:tid/:aid", teachController.setTeachAvailabilityById);
 // Find availability in entry
 router.get("/find/:cid/:tid", teachController.getAvailabilityName);
 
-module.exports = router;
 
+module.exports = router;

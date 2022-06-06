@@ -1,11 +1,11 @@
 var db = require("../../config/db.config");
 
 const Announcement = function (announcement) {
-    this.AnnouncementId = announcement.AnnouncementId;
     this.Title = announcement.Title;
     this.Body = announcement.Body;
     this.CourseId = announcement.CourseId;
     this.TeacherId = announcement.TeacherId;
+    this.BatchId=announcement.BatchId;
 };
 
 // Add course
@@ -18,7 +18,7 @@ Announcement.addAnnouncement = (newAnnouncement, result) => {
         }
 
         console.log("created tutorial: ", { id: res.insertId, ...newAnnouncement });
-        result(null, { announcementId: res.AnnouncementId, ...newAnnouncement });
+        result(null, { ...newAnnouncement });
     });
 };
 

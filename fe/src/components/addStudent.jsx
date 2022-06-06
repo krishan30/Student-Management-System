@@ -51,9 +51,12 @@ const AddStudent = ({ getStudents }) => {
       NIC: nic,
       registrationDate: registrationDate,
       email: email,
-      batchId:batch
+      batchId:batch,
+      password:"password3",
+
     };
 
+    console.log(payload);
     axios
       .post(`${config.REACT_APP_API}/api/student/sc`, payload, {
         headers: {

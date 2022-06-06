@@ -1,6 +1,7 @@
 const userModel = require("../models/user.model");
-const CryptoJS = require("crypto-js");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const saltRounds = 10;
 
 // Create and Save a new account
 exports.create = (req, res) => {
@@ -10,6 +11,7 @@ exports.create = (req, res) => {
             message: "Content can not be empty!",
         });
     }
+    const salt = bcrypt.genSaltSync(saltRounds);
 
     // Create a new User Account
     const newUser = new userModel({
@@ -23,10 +25,7 @@ exports.create = (req, res) => {
         registrationDate:req.body.registrationDate,
         leaveDate:req.body.leaveDate,
         email:req.body.email,
-        password:CryptoJS.AES.encrypt(
-            req.body.Password,
-            process.env.PASS_SEC
-        ).toString()
+        password:bcrypt.hashSync(req.body.password, salt)
     });
 
     // Save account in the database
@@ -48,12 +47,13 @@ exports.updateProfile= (req, res) => {
             message: "Content can not be empty!",
         });
     }
-
+    const salt = bcrypt.genSaltSync(saltRounds);
     const user = new userModel({
         userId:req.body.userId,
         contactNumber:req.body.contactNumber,
         address:req.body.address,
-        email:req.body.email
+        email:req.body.email,
+        password:bcrypt.hashSync(req.body.password, salt)
     });
 
     userModel.updateProfile(user, (err, data) => {
@@ -108,26 +108,22 @@ exports.login = (req, res) => {
                 });
             }
         } else {
-            const hashedPassword = CryptoJS.AES.decrypt(
-                user.password,
-                process.env.PASS_SEC
-            );
-            const OriginalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
-            if(OriginalPassword !== req.body.Password){
-               return  res.status(401).json("Wrong credentials!");
+            if (!bcrypt.compareSync(req.body.password, user.password)) {
+                res.status(401).json("Wrong credentials!");
+            } else {
+                const accessToken = jwt.sign(
+                    {
+                        userid: user.userid,
+                        usertype: user.usertypeid
+                    },
+                    process.env.JWT_SEC,
+                    {expiresIn: "2d"}
+                );
+                const { Password, ...others } = user;
+
+                res.status(200).json({ ...others, accessToken });
             }
         }
-        const accessToken = jwt.sign(
-            {
-                userid: user.userid,
-                usertype:user.usertypeid
-            },
-            process.env.JWT_SEC,
-            { expiresIn: "3d" }
-        );
-
-        const { password, ...others } = user;
-        res.status(200).json({ ...others, accessToken });
     });
 };
 //Generate Next User Id
@@ -138,16 +134,16 @@ exports.generateNextUserId=(req, res) => {
                 message:
                     err.message || "Some error occurred while getting the user ID.",
             });
-        else {
-            if (userCount === 0) userCount = 1;
-            let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            userCount = userCount.toString();
-            let userId = "1";
-            userId += userCount.padStart(5, '0');
-            let charactersLength = characters.length;
-            userId += characters.charAt(Math.floor(Math.random() * charactersLength));
-            res.send({nextUserId:userId});
-        }
+            else {
+                if (userCount === 0) userCount = 1;
+                let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                userCount = userCount.toString();
+                let userId = "1";
+                userId += userCount.padStart(5, '0');
+                let charactersLength = characters.length;
+                userId += characters.charAt(Math.floor(Math.random() * charactersLength));
+                res.send({nextUserId:userId});
+            }
     });
 
 
