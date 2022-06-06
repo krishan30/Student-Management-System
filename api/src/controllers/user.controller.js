@@ -142,8 +142,7 @@ exports.generateNextUserId=(req, res) => {
             if (userCount === 0) userCount = 1;
             let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             userCount = userCount.toString();
-            let userId = "1";
-            userId += userCount.padStart(5, '0');
+            let userId=userCount.padStart(11, '0');
             let charactersLength = characters.length;
             userId += characters.charAt(Math.floor(Math.random() * charactersLength));
             res.send({nextUserId:userId});

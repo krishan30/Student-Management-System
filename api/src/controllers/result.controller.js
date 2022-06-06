@@ -32,22 +32,16 @@ exports.create = (req, res) => {
 
 // get Grade of a specific student
 exports.FindGradeByCourseIdAndStudentID = (req, res) => {
-    // Validate request
-    if (!req.body) {
-        res.status(400).send({
-            message: "Content can not be empty!",
-        });
-    }
 
-    resultModel.findEntry(req.body.courseId,req.body.studentId, (err, data) => {
+    resultModel.findEntry(req.params.courseId,req.params.studentId, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found result  ${req.body.studentId}.`,
+                    message: `Not found result  ${req.params.studentId}.`,
                 });
             } else {
                 res.status(500).send({
-                    message: "Error retrieving result  " + req.body.studentId,
+                    message: "Error retrieving result  " + req.params.studentId,
                 });
             }
         } else res.send(data);
@@ -55,13 +49,8 @@ exports.FindGradeByCourseIdAndStudentID = (req, res) => {
 
 }
 exports.FindGradesOfCoursesByStudentId = (req, res) => {
-    // Validate request
-    if (!req.body) {
-        res.status(400).send({
-            message: "Content can not be empty!",
-        });
-    }
-    resultModel.findResultsOfAllCourses(req.body.studentId,(err, data) => {
+
+    resultModel.findResultsOfAllCourses(req.params.studentId,(err, data) => {
         if (err)
             res.status(500).send({
                 message:
