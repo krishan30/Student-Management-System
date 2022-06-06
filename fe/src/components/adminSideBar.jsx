@@ -23,9 +23,9 @@ const Sidebar = () => {
       </ul>
       <hr />
 
-      <Link className="text-decoration-none text-white mb-4 mx-2" to="/signout">
+      <NavLink className="text-decoration-none text-white mb-4 mx-2" to="/logout">
         SignOut
-      </Link>
+      </NavLink>
     </div>
   );
 };

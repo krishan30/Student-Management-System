@@ -23,6 +23,7 @@ const AdminLanding = () => {
             <Route path="/course" element={<AdminCourse />} />
             <Route path="/student" element={<AdminStudent />} />
             <Route path="/timetable" element={<AdminTimeTable />} />
+            
           </Routes>
         </div>
       </div>

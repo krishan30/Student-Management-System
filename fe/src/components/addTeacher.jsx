@@ -14,7 +14,6 @@ const AddTeacher = ({getTeachers}) => {
   const [nic, setNIC] = useState("");
   const registrationDate = new Date().toISOString().substring(0, 10);
 
-
   const handleFirstName = (e) => {
     setFirstName(e.target.value);
   };
@@ -45,7 +44,8 @@ const AddTeacher = ({getTeachers}) => {
       address: address,
       NIC: nic,
       registrationDate: registrationDate,
-      email: email
+      email: email,
+      password:firstname
     };
 
     axios

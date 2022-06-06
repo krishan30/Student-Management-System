@@ -52,7 +52,7 @@ const AddStudent = ({ getStudents }) => {
       registrationDate: registrationDate,
       email: email,
       batchId:batch,
-      password:"password3",
+      password:firstname,
 
     };
 

@@ -38,8 +38,10 @@ export default function Login() {
               const jwt = localStorage.getItem("token");
               const user = jwtDecode(jwt);
               console.log(user);
-              if (user.usertype===2) {
+              if (user.usertype===3) {
                 navigate("/Admin");
+              }else if (user.usertype===2){
+                navigate("/");
               }else{
                 navigate("/");
               }
