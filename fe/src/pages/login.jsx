@@ -31,19 +31,21 @@ export default function Login() {
           },
         })
         .then((res) => {
-            console.log(res.data.accessToken);
             localStorage.setItem("token",res.data.accessToken);
 
             try {
               const jwt = localStorage.getItem("token");
               const user = jwtDecode(jwt);
-              console.log(user);
-              if (user.usertype===3) {
+
+              localStorage.setItem("typeId",user.usertype);
+              const type = localStorage.getItem('typeId')
+
+              if (type==='3') {
                 navigate("/Admin");
-              }else if (user.usertype===2){
+              }else if (type==='2'){
                 navigate("/");
               }else{
-                navigate("/");
+                navigate("/teacher");
               }
             } catch (error) {
               

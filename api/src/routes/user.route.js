@@ -11,5 +11,5 @@ router.post("/profile",userController.getDetailsById);
 // user login
 router.post("/login",userController.login);
 // get next user ID
-router.post("/nextId",userController.generateNextUserId);
+router.get("/nextId",userController.generateNextUserId);
 module.exports = router;

@@ -1,8 +1,5 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-
-
-
 import TeacherHeader from "./teacherHeader";
 import Sidebar from "./teacherSideBar";
 import Announcement from "./addAnnouncement";
@@ -13,14 +10,14 @@ const TeacherLanding = () => {
     <div>
       <TeacherHeader />
       <div className="row m-0">
-        <div className="col-2 p-0 bg-dark"  style={{ height: "225rem" }}>
+        <div className="col-2 p-0 bg-dark"  style={{ height: "100vh" }}>
           <Sidebar />
         </div>
         <div className="col-10">
           <Routes>
-            <Route path="/teacher/announcement" element={<Announcement />} />
-            <Route path="/teacher/result" element={<Result />} />
-            <Route path="/teacher/studentDetail" element={<Detail />} />
+            <Route path="/announcement" element={<Announcement />} />
+            <Route path="/result" element={<Result />} />
+            <Route path="/studentDetail" element={<Detail />} />
           </Routes>
         </div>
       </div>
