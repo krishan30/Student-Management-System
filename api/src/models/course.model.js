@@ -4,7 +4,6 @@ const Course = function (course) {
     this.CourseId = course.CourseId;
     this.LevelId = course.LevelId;
     this.CourseName = course.CourseName;
-    this.Description = course.Description;
     this.Duration = course.Duration;
     this.Credit = course.Credit;
 };
@@ -58,7 +57,7 @@ Course.getAllCourses = (result) => {
 
 //get all courses enrolled by student with given student id
 Course.getAllEnrolledCourses = (studentId, result) => {
-    let query = "SELECT course.courseid, course.levelid, course.coursename, course.description, course.duration, course.credit FROM courseenrollment, course WHERE studentid = ? AND course.courseid = courseenrollment.courseid AND finisheddate IS NULL";
+    let query = "SELECT course.courseid, course.levelid, course.coursename, course.duration, course.credit FROM courseenrollment, course WHERE studentid = ? AND course.courseid = courseenrollment.courseid AND finisheddate IS NULL";
     db.query(query, [studentId], (err, res) => {
         if (err) {
             console.log(err);

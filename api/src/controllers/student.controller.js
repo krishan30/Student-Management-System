@@ -54,21 +54,16 @@ exports.create = (req, res) => {
 };
 // get details about an student account By using student ID
 exports.getDetailsById = (req, res) => {
-    // Validate request
-    if (!req.body) {
-        res.status(400).send({
-            message: "Content can not be empty!",
-        });
-    }
-    studentModel.getDetailsById(req.body.studentId, (err, data) => {
+
+    studentModel.getDetailsById(req.params.studentId, (err, data) => {
         if (err)
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found student with id ${req.body.studentId}.`
+                    message: `Not found student with id ${req.params.studentId}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Error finding student with id " + req.body.studentId
+                    message: "Error finding student with id " + req.params.studentId
                 });}
         else res.send(data);
     });

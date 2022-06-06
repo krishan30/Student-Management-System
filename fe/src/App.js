@@ -1,46 +1,22 @@
 import React from "react";
-import { ToastContainer } from "react-toastify";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import AdminLanding from "./pages/admin/adminLanding";
-import NavBarTeacher from './components/teacher/navbar';
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.css";
-import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-// import AddAnnouncement from "./components/teacher/addAnnouncement";
-// import ViewStudentDetail from "./components/teacher/viewStudentDetail";
-// import AddExamResult from "./components/teacher/addExamResults";
+import "bootstrap/dist/css/bootstrap.css";
+// import NavBarTeacher from "./components/teacher/navbar";
+// import TeacherHeader from "./components/teacher/teacherHeader";
+// import TeacherSidebar from "./components/teacher/teacherSideBar";
+import { BrowserRouter as Router  , Route,Routes} from "react-router-dom";
+import TeacherLanding from "./components/teacher/teacherLanding";
 
 export default function App() {
   return (
-    <div>
+    <div className="App">
+      {/* <NavBarTeacher /> */}
+      {/* <TeacherLanding></TeacherLanding> */}
       <Router>
-        <Routes>
-          <Route path="/Admin/*" element={<AdminLanding />} />
-          <Route
-            path="/Admin"
-            element={<Navigate to="/Admin/dashboard" replace />}
-          />
-
-          <Route path="/" element={<NavBarTeacher/>}></Route>
-        </Routes>
+        <TeacherLanding></TeacherLanding>
+        {/* <TeacherHeader></TeacherHeader> */}
+        {/* <TeacherSidebar></TeacherSidebar> */}
       </Router>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        theme="colored"
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        draggable
-      />
     </div>
   );
 }

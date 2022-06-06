@@ -17,6 +17,7 @@ exports.addAnnouncement = (req, res) => {
         Body : req.body.Body,
         CourseId : req.body.CourseId,
         TeacherId : req.body.TeacherId,
+        BatchId :req.body.BatchId
     });
 
     // Save announcement in the database
