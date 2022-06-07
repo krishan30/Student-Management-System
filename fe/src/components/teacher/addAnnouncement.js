@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import config from "../../config/config.json";
+import useGetTeacherId from "../../hooks/useGetTeacherId";
 
 export default function Form() {
+  const [announcementBody, setAnnouncementBody] = useState("");
+  const [title, setTitle] = useState("");
+  const [allCourses, setAllCourses] = useState([]);
+  const [courseId, setCourseId] = useState("");
+  const [batchid,setbatchid] = useState("");
+  // const [teacherId, setTeacherId] =  // teacher id : from session set this.......................
+
+  useGetTeacherId();
+
   useEffect(() => {
+  
     axios
       .get(`${config.REACT_APP_API}/api/course/`)
       .then((response) => {
@@ -21,15 +32,13 @@ export default function Form() {
     setTitle(e.target.value);
   };
 
+  const handleBatchId = (e) => {
+    setbatchid(e.target.value);
+  };
+
   const handleAnnouncement = (e) => {
     setAnnouncementBody(e.target.value);
   };
-
-  const [announcementBody, setAnnouncementBody] = useState("");
-  const [title, setTitle] = useState("");
-  const [allCourses, setAllCourses] = useState([]);
-  const [courseId, setCourseId] = useState("");
-  const [teacherId, setTeacherId] = useState(1); // teacher id : from session set this.......................
 
   const handleChange = (e) => {
     setCourseId(e.target.value);
@@ -41,7 +50,8 @@ export default function Form() {
       Title: title,
       CourseId: courseId,
       Body: announcementBody,
-      TeacherId: teacherId,
+      TeacherId: localStorage.getItem('teacherid'),
+      BatchId : batchid
     };
     console.log("payload", payload);
     
@@ -64,6 +74,10 @@ export default function Form() {
         <div className=" row m-3 align-items-center text-end">
           <div className="col-5"> <label className="">Title</label> </div>
           <div className="col-4"> <input type="text" className="form-control" value={title} onChange={handleTitle} ></input> </div>
+        </div>
+        <div className=" row m-3 align-items-center text-end">
+          <div className="col-5"> <label className="">Batch ID</label> </div>
+          <div className="col-4"> <input type="text" className="form-control" value={batchid} onChange={handleBatchId} ></input> </div>
         </div>
         <div className=" row m-3 align-items-center text-end">
           <div className="col-5"> <label className="">Course</label> </div>

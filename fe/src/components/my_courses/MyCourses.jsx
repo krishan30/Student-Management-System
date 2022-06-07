@@ -1,22 +1,45 @@
-import "./datatable.scss";
+import "./my_courses.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns } from "../../datatablesource";
-import { Link } from "react-router-dom";
+
 import { useState,useEffect } from "react";
 import api from "../../services/api"
 import config from "../../config/config.json";
 
-const Datatable = () => {
-  const current = new Date();
-  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+export const userColumns = [
+
+    { field: "courseid", headerName: "ID", width: 70 },
+    {
+      field: "levelid",
+      headerName: "Level Code	",
+      width: 100,
+    },
+    {
+      field: "coursename",
+      headerName: "Course Name",
+      width: 680,
+    },
+  
+    {
+      field: "credit",
+      headerName: "Credits",
+      width: 100,
+    },
+    {
+      field: "duration",
+      headerName: "Duration",
+      width: 100,
+    }
+  ];
+  
+
+
+const DatatableMyCourses = () => {
 
   const handleDelete = (row) => {
     setData(data.filter((item) => item.courseid !== row.courseid));
-    api.post('/api/enrollment', {
-      StudentId: localStorage.getItem('studentid'),
-        CourseId: row.courseid,
-        EnrolledDate: date,
-        FinishedDate: null,
+    api.put('/api/enrollment/unenroll/'+row.courseid, {
+        StudentId:localStorage.getItem('studentid'),
+        CourseId:row.courseid,
     })
     .then(function (response) {
       console.log(response);
@@ -26,14 +49,12 @@ const Datatable = () => {
     });
   };
 
-
-
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get(`${config.REACT_APP_API}/api/course`);
+        const response = await api.get(`${config.REACT_APP_API}/api/course/${localStorage.getItem('studentid')}`);
         setData(response.data);
         console.log(response.data)
       } catch (error) {
@@ -66,7 +87,7 @@ const Datatable = () => {
               className="viewButton"
               onClick={() => handleDelete(params.row)}
             >
-              Enroll
+              Unenroll
             </div>
           </div>
         );
@@ -87,5 +108,4 @@ const Datatable = () => {
     </div>
   );
 };
-
-export default Datatable;
+export default DatatableMyCourses;

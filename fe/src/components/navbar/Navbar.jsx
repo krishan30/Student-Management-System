@@ -4,11 +4,11 @@ import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNone
 const Navbar = () => {
 
   return (
-    <div className="navbar">
-      <div className="wrapper">
+    <div className="navbar p-0">
+      <div className="wrapper p-0">
         <div className="items">
           <div className="item">
-            <h2>Student Dashboard</h2>
+            <h2 className="m-0">Student Dashboard</h2>
           </div>
           {/* <div className="item">
             <NotificationsNoneOutlinedIcon className="icon" />

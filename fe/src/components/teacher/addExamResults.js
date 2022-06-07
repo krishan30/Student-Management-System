@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import config from "../../config/config.json";
 // import { Container, Row, Col, Button } from "react-bootstrap";
 
 const ExamResult = () => {
@@ -13,7 +14,7 @@ const ExamResult = () => {
   const [date, setDate] = useState();
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/grade/GradeDetails`)
+      .get(`${config.REACT_APP_API}/api/grade/GradeDetails`)
       .then((res) => {
         setAllGrades(res.data);
         console.log("all grades= ", res.data);
@@ -36,7 +37,7 @@ const ExamResult = () => {
    
     const payload = {
       courseId: selectedCourse,
-      teacherId: teacherId,
+      teacherId: localStorage.getItem('teacherid'),
       releaseDate: currrentDateTime,
       batchId: batchid,
       grade: grade,
@@ -44,7 +45,7 @@ const ExamResult = () => {
     };
 
     console.log("payload", payload);
-    axios.post(`http://localhost:5000/api/result/ResultDetails`, payload).then(
+    axios.post(`${config.REACT_APP_API}/api/result/ResultDetails`, payload).then(
       (response) => {
         console.log(response);
         setstudentid("");
@@ -63,7 +64,7 @@ const ExamResult = () => {
     setSelectedCourse(e.target.value);
     axios
       .get(
-        `http://localhost:5000/api/result/FindResult/${e.target.value}/${studentid}`
+        `${config.REACT_APP_API}/api/result/FindResult/${e.target.value}/${studentid}`
       )
       .then((res) => {
         // setAllGrades(res.data);
@@ -82,7 +83,7 @@ const ExamResult = () => {
     console.log("student id = ", e.target.value);
 
     axios
-      .get(`http://localhost:5000/api/student/sc/${e.target.value}`)
+      .get(`${config.REACT_APP_API}/api/student/sc/${e.target.value}`)
       .then((res) => {
         console.log(res);
         console.log("student data= ", res.data);
@@ -91,7 +92,7 @@ const ExamResult = () => {
       .catch((err) => console.log(err));
 
     axios
-      .get(`http://localhost:5000/api/course/${e.target.value}`)
+      .get(`${config.REACT_APP_API}/api/course/${e.target.value}`)
       .then((response) => {
         setcourses(response.data);
         console.log("student courses= ", response.data);

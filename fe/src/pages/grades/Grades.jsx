@@ -11,13 +11,15 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import api from "../../services/api";
 import React, { useState, useEffect } from "react";
+import config from "../../config/config.json";
+
 const Grades = () => {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("http://localhost:5000/api/result/AllResult/1");
+        const response = await api.get(`${config.REACT_APP_API}/api/result/AllResult/${localStorage.getItem('studentid')}`);
         setRows(response.data);
       } catch (error) {
         if (error.response) {

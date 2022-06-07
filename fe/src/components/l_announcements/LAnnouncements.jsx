@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./l_announcements.scss";
 import api from "../../services/api"
-
+import config from "../../config/config.json";
 
 
 const Lannouncements = ({ type }) => {
@@ -11,7 +11,7 @@ const Lannouncements = ({ type }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("http://localhost:5000/api/announcement/student/1");
+        const response = await api.get(`${config.REACT_APP_API}/api/announcement/student/${localStorage.getItem('studentid')}`);
         setAnnouncements(response.data);
       } catch (error) {
         if (error.response) {

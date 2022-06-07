@@ -37,7 +37,7 @@ const AddTeacher = ({getTeachers}) => {
     e.preventDefault();
     let payload = {
       userId: userId,
-      userTypeId: 1,
+      userTypeId: 2,
       firstName: firstname,
       lastName: lastname,
       contactNumber: contactnum,

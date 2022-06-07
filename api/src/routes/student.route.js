@@ -8,5 +8,7 @@ router.post("/sc", studentController.create);
 router.get("/sc/:studentId", studentController.getDetailsById);
 // Get All students details
 router.get("/sall", studentController.getAllStudentsDetails);
+// Get student id
+router.get("/scui/:userId",studentController.getStudentIdByUserID);
 
 module.exports = router;

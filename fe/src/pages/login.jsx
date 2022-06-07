@@ -68,8 +68,8 @@ export default function Login() {
           const type = localStorage.getItem("typeId");
           if (type === "3") {
             window.location = "/Admin";
-          } else if (type === "2") {
-            navigate("/");
+          } else if (type === "1") {
+            window.location = "/";
           } else {
             window.location = "/teacher";
           }

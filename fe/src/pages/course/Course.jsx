@@ -4,7 +4,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import "./course.scss";
 import api from "../../services/api";
-
+import config from "../../config/config.json";
 import { useParams } from 'react-router-dom';
 
 const Course = () => {
@@ -16,7 +16,7 @@ const Course = () => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await api.get("http://localhost:5000/api/course/find/"+courseId);
+          const response = await api.get(`${config.REACT_APP_API}/api/course/find/${courseId}`);
           setRows(response.data)
         } catch (error) {
           if (error.response) {

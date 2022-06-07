@@ -3,14 +3,16 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import React,{ useState,useEffect } from "react";
 import api from "../../services/api";
+import config from "../../config/config.json";
 
 const Profile = () => {
   const [file,setFile] = useState({});
   
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("http://localhost:5000/api/student/sc/1");
+        const response = await api.get(`${config.REACT_APP_API}/api/student/sc/${localStorage.getItem('studentid')}`);
         //console.log(response.data);
         setFile(response.data);
       } catch (error) {

@@ -52,4 +52,22 @@ Teacher.getAllTeachersDetails = (result) => {
     });
 };
 
+Teacher.getTeacherIdByUserId=(userId, result) => {
+    db.query(`SELECT teacherid FROM teacher WHERE userid=?`,userId,(err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("found teacherid: ", res[0]);
+            result(null, res[0]);
+            return;
+        }
+
+        result({ kind: "not_found" }, null);
+    });
+}
+
 module.exports = Teacher;

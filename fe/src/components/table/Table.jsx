@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./table.scss";
 import api from "../../services/api"
 import { Link } from "react-router-dom";
+import config from "../../config/config.json";
 
 
 const List = () => {
@@ -10,7 +11,7 @@ const List = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("http://localhost:5000/api/course/1");
+        const response = await api.get(`${config.REACT_APP_API}/api/course/${localStorage.getItem('studentid')}`);
         setRows(response.data);
       } catch (error) {
         if (error.response) {

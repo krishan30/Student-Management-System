@@ -51,6 +51,24 @@ Student.getAllStudentsDetails = (result) => {
         }
     });
 };
+Student.getStudentIdByUserId=(userId, result) => {
+    db.query(`SELECT studentid FROM student WHERE userid=?`,userId, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("found studentid: ", res[0]);
+            result(null, res[0]);
+            return;
+        }
+
+        result({ kind: "not_found" }, null);
+    });
+}
+
 
 module.exports = Student;
 

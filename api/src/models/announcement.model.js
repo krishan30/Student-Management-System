@@ -24,7 +24,7 @@ Announcement.addAnnouncement = (newAnnouncement, result) => {
 
 // Get all received announcements with given student id
 Announcement.getAllAnnouncements = (studentId, result) => {
-    let query = "SELECT * FROM announcement LEFT OUTER JOIN courseenrollment using(courseid) WHERE studentid = ?";
+    let query = "SELECT announcementid,title,body FROM courseenrollment JOIN student ON courseenrollment.studentid = student.studentid JOIN announcement ON courseenrollment.courseid=announcement.courseid AND announcement.batchid=student.batchid WHERE student.studentid=?";
     db.query(query, [studentId], (err, res) => {
         if (err) {
             console.log(err);
@@ -39,23 +39,8 @@ Announcement.getAllAnnouncements = (studentId, result) => {
 // Get recent 10 received announcements with given student id
 Announcement.getRecentAnnouncements = (studentId, result) => {
 
-    let query = "SELECT * FROM announcement LEFT OUTER JOIN courseenrollment using(courseid) WHERE studentid = ? ORDER BY announcementid DESC LIMIT 10";
+    let query = "SELECT announcementid,title,body FROM courseenrollment JOIN student ON courseenrollment.studentid = student.studentid JOIN announcement ON courseenrollment.courseid=announcement.courseid AND announcement.batchid=student.batchid WHERE student.studentid=? ORDER BY announcementid DESC LIMIT 10";
     db.query(query, [studentId], (err, res) => {
-        if (err) {
-            console.log(err);
-            result(null, err);
-        } else {
-            console.log("success");
-            result(null, res);
-        }
-    });
-};
-
-// Get recent 10 received announcements with given student id
-Announcement.getRecentCourseAnnouncements = (courseId, result) => {
-
-    let query = "SELECT * FROM announcement  WHERE courseid = ? ORDER BY announcementid DESC LIMIT 10";
-    db.query(query, [courseId], (err, res) => {
         if (err) {
             console.log(err);
             result(null, err);
