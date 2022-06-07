@@ -6,10 +6,26 @@ import { useState,useEffect } from "react";
 import api from "../../services/api"
 
 const Datatable = () => {
+  const current = new Date();
+  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
 
-  const handleDelete = (courseid) => {
-    setData(data.filter((item) => item.courseid !== courseid));
+  const handleDelete = (row) => {
+    setData(data.filter((item) => item.courseid !== row.courseid));
+    api.post('/api/enrollment', {
+      StudentId: 1,
+        CourseId: row.courseid,
+        EnrolledDate: date,
+        FinishedDate: null,
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   };
+
+
 
   const [data, setData] = useState([]);
 
@@ -47,7 +63,7 @@ const Datatable = () => {
             </Link> */}
             <div
               className="viewButton"
-              onClick={() => handleDelete(params.row.courseid)}
+              onClick={() => handleDelete(params.row)}
             >
               Enroll
             </div>
