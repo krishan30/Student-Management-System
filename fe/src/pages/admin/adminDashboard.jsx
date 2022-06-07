@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import useGetBatch from "../../hooks/useGetBatch";
 import useGetCourses from "../../hooks/useGetCourses";
 import useGetLevel from "../../hooks/useGetLevel";
@@ -15,6 +16,10 @@ const AdminDashboard = () => {
   return (
     <div>
       <div className="mx-auto">
+        <Helmet>
+          <title>Dashboard</title>
+          <meta name="description" />
+        </Helmet>
         <div className="row m-4 d-flex text-center align-items-center shadow-lg p-3 ">
           <div className=" mx-auto col  shadow mx-5">
             <div className="text-center h4 ">Teacher</div>

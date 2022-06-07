@@ -1,38 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import config from "../../config/config.json";
+
 const StudentDetail = () => {
-  // const data = [
-  //   {
-  //     studentid: 1,
-  //     batchid: 2,
-  //     firstname: "kesavi",
-  //     lastname: "aravinthan",
-  //     contactnumber: "0778899654",
-  //     address: "No 23, Second street,Jaffna",
-  //     nic: "997121789V",
-  //     email: "kesavi@gmail.com",
-  //   },
-  //   {
-  //     studentid: 2,
-  //     batchid: 2,
-  //     firstname: "abinesh",
-  //     lastname: "thaventhirarajah",
-  //     contactnumber: "0778229654",
-  //     address: "No 23, Third street,Alvaai",
-  //     nic: "997121789V",
-  //     email: "abinesh@gmail.com",
-  //   },
-  //   {
-  //     studentid: 3,
-  //     batchid: 2,
-  //     firstname: "laksi",
-  //     lastname: "tharmalingam",
-  //     contactnumber: "0771144569",
-  //     address: "No 23, Fourth street,Kilinochi",
-  //     nic: "997121789V",
-  //     email: "laksi@gmail.com",
-  //   },
-  // ];
+
 
   const [data, setData] = useState([]);
   const [stuId, setStuId] = useState("");
@@ -47,7 +18,7 @@ const StudentDetail = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/student/sall")
+      .get(`${config.REACT_APP_API}/api/student/sall`)
       .then((response) => {
         setData(response.data);
       })

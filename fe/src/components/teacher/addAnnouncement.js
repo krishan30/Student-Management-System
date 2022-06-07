@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import config from "../../config/config.json";
+
 export default function Form() {
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/course/`)
+      .get(`${config.REACT_APP_API}/api/course/`)
       .then((response) => {
         const courseNames = response.data.map(function (d) {
           return `${d.coursename}`;
@@ -43,7 +45,7 @@ export default function Form() {
     };
     console.log("payload", payload);
     
-    axios.post(`http://localhost:5000/api/announcement/`, payload).then(
+    axios.post(`${config.REACT_APP_API}/api/announcement/`, payload).then(
       (response) => {
         console.log(response);
         setTitle("");

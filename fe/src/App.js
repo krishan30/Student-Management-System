@@ -20,17 +20,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import TeacherLanding from "./components/teacher/teacherLanding";
 
 export default function App() {
-  const [userTypeId, setUserType] = useState();
-
-  useEffect(() => {
-    try {
-      if (localStorage.getItem("typeId")) {
-        const usertype = localStorage.getItem("typeId");
-        setUserType(usertype);
-      }
-    } catch (error) {}
-  }, []);
-
   
   return (
     <div className="App">
@@ -41,7 +30,7 @@ export default function App() {
             <Route path="/logout" element={<Logout />} />
           </Route>
           <Route path="/" element={<PrivateRoutes />}>
-            {userTypeId === '3' && (
+            {localStorage.getItem("typeId") === '3' && (
               <React.Fragment>
                 <Route path="/Admin/*" element={<AdminLanding />} />
                 <Route
@@ -51,13 +40,13 @@ export default function App() {
               </React.Fragment>
             )}
 
-            {userTypeId !== '3' && (
+            {localStorage.getItem("typeId") !== '3' && (
               <React.Fragment>
                 <Route path="/Admin/*" element={<Navigate to="/" replace />} />
               </React.Fragment>
             )}
 
-            {userTypeId === '1' && (
+            {localStorage.getItem("typeId") === '1' && (
               <React.Fragment>
                 <Route path="/Admin/*" element={<TeacherLanding />} />
                 <Route path="/teacher/*" element={<TeacherLanding />}></Route>
