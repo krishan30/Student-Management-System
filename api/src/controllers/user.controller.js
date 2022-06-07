@@ -1,6 +1,7 @@
 const userModel = require("../models/user.model");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
+const courseModel = require("../models/course.model");
 
 // Create and Save a new account
 exports.create = (req, res) => {
@@ -73,14 +74,8 @@ exports.updateProfile= (req, res) => {
 
 //Get user profile details
 exports.getDetailsById = (req, res) => {
-    // Validate request
-    if (!req.body) {
-        res.status(400).send({
-            message: "Content can not be empty!",
-        });
-    }
 
-    userModel.getDetailsById(req.body.userId, (err, data) => {
+    userModel.getDetailsById(req.params.userId, (err, data) => {
         if (err)
             if (err.kind === "not_found") {
                 res.status(404).send({
