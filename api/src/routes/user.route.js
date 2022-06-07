@@ -7,7 +7,7 @@ router.post("/create", userController.create);
 // update a user
 router.post("/update", userController.updateProfile);
 //get user details
-router.post("/profile",userController.getDetailsById);
+router.get("/profile",userController.getDetailsById);
 // user login
 router.post("/login",userController.login);
 // get next user ID
