@@ -85,4 +85,19 @@ exports.getAllTeachersDetails = (req, res) => {
     });
 
 }
+exports.getTeacherIdByUserID=(req, res) =>{
+
+    teacherModel.getTeacherIdByUserId(req.params.userId, (err, data) => {
+        if (err)
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `Not found teacher with id ${req.params.userId}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "Error finding teacher with id " + req.params.userId
+                });}
+        else res.send(data);
+    });
+}
 

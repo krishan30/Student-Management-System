@@ -79,4 +79,19 @@ exports.getAllStudentsDetails = (req, res) => {
     });
 
 }
+exports.getStudentIdByUserID=(req, res) =>{
+
+    studentModel.getStudentIdByUserId(req.params.userId, (err, data) => {
+        if (err)
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `Not found student with id ${req.params.userId}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "Error finding student with id " + req.params.userId
+                });}
+        else res.send(data);
+    });
+}
 

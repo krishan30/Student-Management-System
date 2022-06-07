@@ -8,5 +8,6 @@ router.post("/tc", teacherController.create);
 router.get("/ti",teacherController.getDetailsById);
 // Get All teachers details
 router.get("/tall",teacherController.getAllTeachersDetails);
-
+// Get teacher id
+router.get("/ti/:userId",teacherController.getTeacherIdByUserID);
 module.exports = router;

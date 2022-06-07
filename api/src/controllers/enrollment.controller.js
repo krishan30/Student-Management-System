@@ -11,7 +11,6 @@ exports.createEnrollment = (req, res) => {
             message: "Content can not be empty!",
         });
     }
-
     // Create an enrollment
     const enrollment = new enrollmentModel({
         StudentId: req.body.StudentId,
