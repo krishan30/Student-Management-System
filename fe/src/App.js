@@ -32,6 +32,7 @@ export default function App() {
       <Router>
         <Routes>
           <Route path="/" element={<PublicRoutes />}>
+            <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
           </Route>
@@ -114,7 +115,7 @@ export default function App() {
 
             {localStorage.getItem("typeId") !== "1" && (
               <React.Fragment>
-                <Route path="/*" element={<Navigate to="/" replace />} />
+                <Route path="/*" element={<Navigate to="/login" replace />} />
               </React.Fragment>
             )}
           </Route>
